@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
 import ollama
+import uvicorn
 
 app = FastAPI()
-
 
 
 def generate_stream(prompt: str):
@@ -46,3 +46,11 @@ def generate_stream(prompt: str):
 @app.get("/generate")
 def generate(prompt: str):
     return StreamingResponse(generate_stream(prompt), media_type='text/plain')
+
+
+def start_server():
+    config = uvicorn.Config(app=app, host="127.0.0.1", port=8000, log_level="error")
+    server = uvicorn.Server(config)
+    server.run()
+
+# uvicorn.run("main:app", host="127.0.0.1", port=8000, log_level="error")
