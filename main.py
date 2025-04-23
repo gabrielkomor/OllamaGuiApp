@@ -5,6 +5,7 @@ import ollama
 app = FastAPI()
 
 
+
 def generate_stream(prompt: str):
     word_buffer = []
     incomplete = ""
